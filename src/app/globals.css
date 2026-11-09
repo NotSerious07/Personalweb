@@ -1,0 +1,104 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: 245 245 242;
+  --bg-elevated: 255 255 255;
+  --fg: 16 16 16;
+  --fg-muted: 82 82 82;
+  --border: 221 217 208;
+  --accent: 197 164 109;
+  --accent-fg: 16 16 16;
+  color-scheme: light;
+}
+
+.dark {
+  --bg: 8 8 8;
+  --bg-elevated: 16 16 16;
+  --fg: 245 245 242;
+  --fg-muted: 161 161 161;
+  --border: 36 36 36;
+  --accent: 197 164 109;
+  --accent-fg: 8 8 8;
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  @apply font-body antialiased;
+  background-color: rgb(var(--bg));
+  color: rgb(var(--fg));
+}
+
+::selection {
+  background-color: rgba(197, 164, 109, 0.35);
+}
+
+@layer components {
+  .container-content {
+    @apply mx-auto w-full max-w-content px-5 sm:px-8 lg:px-10;
+  }
+  .section-pad {
+    @apply py-16 sm:py-20 lg:py-24;
+  }
+  .eyebrow {
+    @apply font-body text-xs font-medium uppercase tracking-[0.22em] text-champagne;
+  }
+  .heading-display {
+    @apply font-display font-semibold tracking-tight text-[rgb(var(--fg))];
+  }
+  .muted {
+    color: rgb(var(--fg-muted));
+  }
+  .surface {
+    background-color: rgb(var(--bg-elevated));
+    border: 1px solid rgb(var(--border));
+  }
+  .focus-ring {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-champagne focus-visible:ring-offset-2;
+    --tw-ring-offset-color: rgb(var(--bg));
+  }
+  .link-underline {
+    @apply underline decoration-[rgb(var(--border))] underline-offset-4 transition-colors hover:decoration-champagne;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Subtle reveal: functional without JS/animation (content visible by default) */
+.reveal {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .reveal[data-animate="true"] {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 600ms ease, transform 600ms ease;
+  }
+  .reveal[data-animate="true"].is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
